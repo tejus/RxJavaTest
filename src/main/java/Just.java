@@ -5,18 +5,19 @@ import io.reactivex.disposables.Disposable;
 public class Just {
 
     void just() {
-        String value = "Test value";
+        String[] value = {"Test value 1", "Test value 2"};
         Observable.just(value)
-                .subscribe(new Observer<String>() {
+                .subscribe(new Observer<String[]>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         print("onSubscribe()");
                     }
 
                     @Override
-                    public void onNext(String o) {
+                    public void onNext(String[] o) {
                         print("onNext()");
-                        print(o.toString());
+                        for (String string : o)
+                            print(string);
                     }
 
                     @Override
