@@ -43,7 +43,7 @@ class Defer {
 
     private Observable<String> valueObservable() {
         try {
-            return Observable.just(value);
+            return Observable.defer(() -> Observable.just(value));
         } catch (NullPointerException e) {
             print("NPE caught!");
             return null;
