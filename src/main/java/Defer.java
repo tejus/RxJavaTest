@@ -8,6 +8,10 @@ class Defer {
 
     void defer() {
         Observable<String> valueObservable = valueObservable();
+        if (valueObservable == null) {
+            print("valueObservable is null, returning");
+            return;
+        }
         setValue("Test value");
         valueObservable.subscribe(new Observer<String>() {
             @Override
@@ -38,15 +42,12 @@ class Defer {
     }
 
     private Observable<String> valueObservable() {
-        return Observable.create(emitter -> {
-            try {
-                print("subscribe()");
-                emitter.onNext(value);
-            } catch (Exception e) {
-                emitter.onError(e);
-            }
-            emitter.onComplete();
-        });
+        try {
+            return Observable.just(value);
+        } catch (NullPointerException e) {
+            print("NPE caught!");
+            return null;
+        }
     }
 
     private void print(String s) {
