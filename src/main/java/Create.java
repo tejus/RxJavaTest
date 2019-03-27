@@ -31,8 +31,8 @@ class Create {
                     throw new Exception("Test Error!");
                 } catch (Exception e) {
                     emitter.onError(e);
+                    emitter.onComplete();
                 }
-                emitter.onComplete();
             }
         });
 
