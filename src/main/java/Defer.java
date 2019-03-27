@@ -4,7 +4,7 @@ import io.reactivex.disposables.Disposable;
 
 class Defer {
 
-    private String value;
+    private String[] value;
 
     void defer() {
         Observable<String> valueObservable = valueObservable();
@@ -12,7 +12,7 @@ class Defer {
             print("valueObservable is null, returning");
             return;
         }
-        setValue("Test value");
+        setValue(new String[]{"A", "B", "C", "D", "E", "F", "G", "H"});
         valueObservable.subscribe(new Observer<String>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -37,13 +37,13 @@ class Defer {
         });
     }
 
-    private void setValue(String value) {
+    private void setValue(String[] value) {
         this.value = value;
     }
 
     private Observable<String> valueObservable() {
         try {
-            return Observable.defer(() -> Observable.just(value));
+            return Observable.fromArray(value);
         } catch (NullPointerException e) {
             print("NPE caught!");
             return null;
