@@ -1,6 +1,7 @@
 public class Main {
 
     public static void main(String[] args) {
-        Create.create();
+        Defer defer = new Defer();
+        defer.defer();
     }
 }
