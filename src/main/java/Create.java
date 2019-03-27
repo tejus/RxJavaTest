@@ -28,10 +28,11 @@ class Create {
                     for (String alphabet : alphabets) {
                         emitter.onNext(alphabet);
                     }
-                    emitter.onComplete();
+                    throw new Exception("Test Error!");
                 } catch (Exception e) {
                     emitter.onError(e);
                 }
+                emitter.onComplete();
             }
         });
 
