@@ -1,4 +1,5 @@
 import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -6,7 +7,19 @@ import java.util.List;
 
 class Buffer {
     void buffer() {
-        Observable.just("A", "B", "C", "D", "E", "F", "G", "H")
+        final String[] alphabets = new String[]{"A", "B", "C", "D", "E", "F", "G", "H"};
+
+        Observable.create((ObservableOnSubscribe<String>) emitter -> {
+            print("subscribe()");
+            try {
+                for (String alphabet : alphabets) {
+                    emitter.onNext(alphabet);
+                }
+                emitter.onComplete();
+            } catch (Exception e) {
+                emitter.onError(e);
+            }
+        })
                 .buffer(2)
                 .subscribe(new Observer<List<String>>() {
                     @Override
