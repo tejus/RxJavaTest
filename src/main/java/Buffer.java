@@ -10,8 +10,8 @@ class Buffer {
     void buffer() {
         CountDownLatch latch = new CountDownLatch(1);
         Observable.interval(1, TimeUnit.SECONDS)
-                .take(10)
                 .buffer(2)
+                .take(10)
                 .subscribe(new Observer<List<Long>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
