@@ -1,7 +1,7 @@
 public class Main {
 
     public static void main(String[] args) {
-        Timer timer = new Timer();
-        timer.timer();
+        Buffer buffer = new Buffer();
+        buffer.buffer();
     }
 }
