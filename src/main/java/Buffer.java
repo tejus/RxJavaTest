@@ -1,25 +1,28 @@
 import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 class Buffer {
     void buffer() {
-        Observable.fromArray("A", "B", "C", "D", "E", "F", "G", "H")
+        CountDownLatch latch = new CountDownLatch(1);
+        Observable.interval(1, TimeUnit.SECONDS)
+                .take(10)
                 .buffer(2)
-                .subscribe(new Observer<List<String>>() {
+                .subscribe(new Observer<List<Long>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         print("onSubscribe()");
                     }
 
                     @Override
-                    public void onNext(List<String> o) {
+                    public void onNext(List<Long> o) {
                         print("onNext()");
-                        for (String string : o)
-                            print(string);
+                        for (Long lng : o)
+                            print(lng.toString());
                     }
 
                     @Override
@@ -31,8 +34,16 @@ class Buffer {
                     @Override
                     public void onComplete() {
                         print("onComplete()");
+                        latch.countDown();
                     }
                 });
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            print("Interrupted exception caught!");
+            print(e.getMessage());
+        }
     }
 
     private void print(String s) {
