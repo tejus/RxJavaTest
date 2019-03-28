@@ -6,7 +6,8 @@ import java.util.List;
 
 class Buffer {
     void buffer() {
-        Observable.range(1, 10)
+        Observable.range(1, 5)
+                .repeat(2)
                 .buffer(2)
                 .subscribe(new Observer<List<Integer>>() {
                     @Override
