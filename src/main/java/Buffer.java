@@ -7,19 +7,7 @@ import java.util.List;
 
 class Buffer {
     void buffer() {
-        final String[] alphabets = new String[]{"A", "B", "C", "D", "E", "F", "G", "H"};
-
-        Observable.create((ObservableOnSubscribe<String>) emitter -> {
-            print("subscribe()");
-            try {
-                for (String alphabet : alphabets) {
-                    emitter.onNext(alphabet);
-                }
-                emitter.onComplete();
-            } catch (Exception e) {
-                emitter.onError(e);
-            }
-        })
+        Observable.fromArray("A", "B", "C", "D", "E", "F", "G", "H")
                 .buffer(2)
                 .subscribe(new Observer<List<String>>() {
                     @Override
